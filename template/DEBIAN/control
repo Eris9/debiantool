@@ -1,0 +1,10 @@
+Package: com.example.pkg
+Name: example name
+Pre-Depends: dpkg
+Depends: firmware (>=11.0)
+Version: 0.1
+Architecture: iphoneos-arm
+Description: Insert description here
+Maintainer: name
+Author: no one
+Section: Utilities
