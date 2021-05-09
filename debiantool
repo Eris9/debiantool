@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+import os
+def start():
+  print("Debiantool by Eris9")
+  print("###################")
+  print("1. Create a project")
+  print("2. Pack a project")
+  print("3. Unpack a project")
+  print("4. Source code")
+  print("5. Help")
+  print("###################")
+  query = input("$ ")
+  if query == "Help" or query == "help" or query == "5":
+    print("Debiantool is an easy way to make tweaks\ntype the number in the menu to select it.")
+    start()
+  if query == "1":
+    package_name = input(package name: )
+    os.system(f"mkdir {package_name}")
+    os.system(f"touch {package_name}/pack")
+    with open(f"packages/{package_name}/pack","w") as f:
+      f.write("cd .. && dpkg --build {package_name}/")
+      f.close()
+    os.system(f"chmod +x {package_name}/pack")
+    os.system(f"mkdir {package_name}/DEBIAN")
+    os.system(f"mkdir {package_name}/data/")
+    os.system(f"mkdir {package_name}/data/example.app")
+    os.system(f"mkdir {package_name}/usr")
+    os.system(f"mkdir {package_name}/usr/bin")
+    os.system(f"cd {package_name}/DEBIAN/ && curl https://raw.githubusercontent.com/Eris9/debiantool/main/template/DEBIAN/ -o control")
+    os.system(f"cd {package_name}/DEBIAN/ && curl https://raw.githubusercontent.com/Eris9/debiantool/main/template/DEBIAN/ -o postinst")
+    os.system(f"cd {package_name}/DEBIAN/ && curl https://raw.githubusercontent.com/Eris9/debiantool/main/template/DEBIAN/ -o prerm")
+    os.system(f"cd {package_name}/DEBIAN/ && curl https://raw.githubusercontent.com/Eris9/debiantool/main/template/DEBIAN/ -o preinst")
+    os.system(f"touch {package_name}/usr/bin/{package_name})
+    with open(f"{package_name}/usr/bin/{package_name}","w") as f:
+      f.write(""" echo insert script here """)
+      f.close()
+    print(f"project setup, in {package_name} folder, type `pack` to pack the debian project")
+  if query == "3":
+    path = input("Path to .deb: ")
+    os.system(f"dpkg-deb -x {path}")
+    print("successfully extracted archive")
+  if query == "2":
+    path = input("path to folder: ")
+    os.system(f"dpkg --build {path}")
+  if query == "4":
+    print("Source code: https://github.com/eris9/debiantool")
+    start()
+  if query == "exit":
+    return
+start()
